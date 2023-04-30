@@ -13,7 +13,7 @@ chunk_length = 1200
 delay = 20
 
 def usage():
-    print(f"{__file__} [PATH] or [-r] (= receive finnished data)")
+    print(f"\nUSAGE:\n------\n{os.path.basename(__file__)} [PATH] or [-r] (= receive finnished data)")
     quit()
 
 # CHECK CMD-LINE ARGS
