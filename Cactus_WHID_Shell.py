@@ -63,7 +63,7 @@ while cmd != "exit":
         
     # DECODE BASE64 AND DISPLAY OUTPUT
     b64 = res.replace("!!!END!!!", "").replace("\r", "").replace("\n", "").strip().encode("ascii")
-    for line in base64.b64decode(b64).decode("UTF-8-SIG").replace("\r", "").split("\n"):
+    for line in base64.b64decode(b64).decode("UTF-8-SIG").replace("\r", "").rstrip().split("\n"):
         print(line.rstrip())
 
 
